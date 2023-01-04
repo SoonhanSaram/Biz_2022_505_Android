@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Scrambled Word</string>
+    <string name="txt_title">"write word with gifted Alphabet "</string>
+    <string name="input_word">write word on here</string>
+    <string name="skip">Skip</string>
+    <string name="submit">Confirm</string>
+    <!-- TODO: Remove or change this placeholder text -->
+</resources>

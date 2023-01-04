@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+    <!--
+    navigation.fragment
+    다수의 화면으로 구성된 프로젝트에서 Activity를 사용하지 않고
+    fragment를 이용해 화면을 구성할 경우
+    한 Activity에서 다수의 fragment들을 교체해 화면을 보여줌
+    이 때, 순수 Kotlin 코드로 구현할 경우
+    많은 양의 코드가 필요
+    최신 안드로이드에선 navigation.fragment 도구를 지원해
+    화면전환을 할 수 있도록 만들어 줌
+
+    -->
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.kyoungmin.app.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_subFragment"
+            app:destination="@id/subFragment" />
+        <argument
+            android:name="nation"
+            app:argType="string"
+            android:defaultValue="Korea" />
+        <argument
+            android:name="age"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/subFragment"
+        android:name="com.kyoungmin.app.SubFragment"
+        android:label="fragment_sub"
+        tools:layout="@layout/fragment_sub" >
+        <action
+            android:id="@+id/action_subFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <argument
+            android:name="nation"
+            app:argType="string"
+            android:defaultValue="Korea" />
+        <argument
+            android:name="age"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+</navigation>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">App-008</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="button_add">Add</string>
+    <string name="placeholder">write word on here</string>
+    <string name="check">is right the word you writed?</string>
+    <string name="go_back">return to Main</string>
+</resources>
