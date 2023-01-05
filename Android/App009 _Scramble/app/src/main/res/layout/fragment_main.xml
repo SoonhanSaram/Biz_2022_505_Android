@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <!--
+    dataBinding 을 수행하기위해 전체 화면을 layout 으로 감싸기
+    -->
+
+    <!--
+    data tag 를 설정해 dataBinding을 수행
+    -->
+    <data>
+        <variable
+            name="wordViewMoldel"
+            type="com.kyoungmin.game.models.WordViewModel" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_padding"
+    tools:context=".ui.MainFragment">
+    <!--
+    android:text="@{wordViewMoldel.current}"
+    선언형 프로그래밍
+    전통적인 명령형 프로그래밍에서는
+    txt_title 에 변경된 값을 보여주기 위해서는
+    코드에서 일일이 id를 체크하고
+    해당 id에  맞는 속성(text)에 값을 setting 해 주는 코드를 작성
+
+    하지만 선언형 프로그래밍에서는
+    한번 세팅을 해주고, 이후에는 값이 변경되었을 때
+    자동으로 반영되도록 구현된다
+
+    명령형 프로그래밍은 코딩할 때 x를 어느 곳에 어떻게 등등을 코딩해야함
+    선언형 프로그래밍은 무엇을 어떻게만 지정하면 나머지는 Framework가 알아서 챙겨주는 코드 가능
+        -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{wordViewMoldel.currentWord}"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+        app:layout_constraintBottom_toTopOf="@+id/txt_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_title"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/layout_input_word"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_input_word"
+        style="@style/Kyoungmin.TextInputLayout.OutLineBox"
+        android:hint="@string/input_word"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_title">
+        <!--
+        양방향 two-way Data Binding
+        android:text="@={wordViewMoldel.inputWord}"
+
+        inputbox (TextEditText) 에 키보드를 문자열을 입력하면
+        즉시 wordViewModel 의 inputWord 변수에 저장
+        -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txt_input_word"
+            android:text="@={wordViewMoldel.inputWord}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        style="?attr/materialButtonOutlinedStyle"
+        android:id="@+id/btn_skip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_padding"
+        android:layout_marginEnd="@dimen/default_padding"
+        android:text="@string/skip"
+        app:layout_constraintTop_toBottomOf="@+id/layout_input_word"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_submit"
+        app:layout_constraintEnd_toStartOf="@+id/btn_submit"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_padding"
+        android:layout_marginEnd="@dimen/default_padding"
+        android:text="@string/submit"
+        android:layout_marginTop="@dimen/default_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_skip"
+        app:layout_constraintTop_toBottomOf="@+id/layout_input_word" />
+    <!--
+     android:text="@={wordViewMoldel.inputWord}"
+     wordViewModel 에 담긴 inputWord 변수의 값이 변화가 생기면
+     그 값을 여기 TextView에서 보여달라
+     이러한 역할을 하는 변수를 state 변수 또는 state 라고 한다
+
+     state(변수) 란 변수에 담긴 값에 변화가 생기면
+     즉시 UI에 그 값을 변화를 반영하는 목적으로 만든 변수
+     -->
+    <TextView
+        android:text="@={wordViewMoldel.inputWord}"
+        android:id="@+id/txt_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_submit"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
