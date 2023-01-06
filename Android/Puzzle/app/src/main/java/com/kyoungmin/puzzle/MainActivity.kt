@@ -3,26 +3,22 @@ package com.kyoungmin.puzzle
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.kyoungmin.puzzle.api.data.channel
+import com.kyoungmin.puzzle.api.data.response
 import com.kyoungmin.puzzle.databinding.ActivityMainBinding
+import com.tickaroo.tikxml.TikXml
 import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
-
+// 네이버 사전 API data class
 data class ResultGetSearchWord (
     var lastBuildDate: String = "",
     var total: Int = 0,
     var start: Int = 0,
     var display: Int = 0,
-    var items: List<Items>
-)
-
-data class ResultGetSearchkWord (
-    var lastBuildDate: String = "",
-    var total: Int = 0,
-    var start: Int = 0,
     var items: List<Items>
 )
 
@@ -32,6 +28,7 @@ data class Items (
     var link: String = "",
     var description: String = "",
 )
+
 interface NaverAPI {
     @GET("v1/search/encyc.json")
     fun getSearchWord(
@@ -50,7 +47,7 @@ interface KoreaAPI {
         @Query("part") part : String,
         @Query("start") start : Int? = null,
         @Query("num") num : Int? = null,
-    ): Call<ResultGetSearchkWord>
+    ): Call<response>
 }
 val CLIENT_ID = "oO7nf36M7p4tOjKmxwI4"
 val CLIENT_SECRET = "qlxbuDX1Mb"
@@ -62,6 +59,8 @@ val retrofit = Retrofit.Builder()
     .build()
 val wordSearch = retrofit.create(NaverAPI::class.java)
 
+    // 검색 데이터 필터
+    // TikXml.Builder().exceptionOnUnreadXml(false).build())
 val retrofit2 = Retrofit.Builder()
     .baseUrl("https://krdict.korean.go.kr/api/search/")
     .addConverterFactory(TikXmlConverterFactory.create())
@@ -72,7 +71,7 @@ val kWordSearch = retrofit2.create(KoreaAPI::class.java)
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityMainBinding
+    // private lateinit var binding : ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,18 +93,17 @@ class MainActivity : AppCompatActivity() {
 //                Log.d("실패", t.toString())
 //            }
 //        })
-        kWordSearch.getSearchkWord(VERIFIED_KEY,"나무","word").enqueue(object : Callback<ResultGetSearchkWord>{
+        kWordSearch.getSearchkWord(VERIFIED_KEY,"나무","word").enqueue(object : Callback<response>{
             override fun onResponse(
-                call: Call<ResultGetSearchkWord>,
-                response: Response<ResultGetSearchkWord>
+                call: Call<response>,
+                response: Response<response>
             ) {
                 Log.d("성공", "${response.body()}" )
             }
 
-            override fun onFailure(call: Call<ResultGetSearchkWord>, t: Throwable) {
+            override fun onFailure(call: Call<response>, t: Throwable) {
                 Log.d("실패", t.toString())            }
         })
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
     }
 }
